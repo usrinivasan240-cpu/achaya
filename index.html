@@ -7,100 +7,257 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
-  <header class="app-header">
-    <div class="brand">
-      <span class="logo" aria-hidden="true">📚</span>
-      <h1 class="title">E‑Library</h1>
+  <div id="authScreen" class="auth-screen">
+    <div class="auth-container">
+      <div class="auth-header">
+        <span class="logo" aria-hidden="true">📚</span>
+        <h1>E‑Library</h1>
+        <p>Your Smart Digital Library Platform</p>
+      </div>
+      
+      <div class="auth-form" id="loginForm">
+        <h2>Welcome Back</h2>
+        <form id="loginFormEl">
+          <div class="form-group">
+            <label for="loginEmail">Gmail Email</label>
+            <input id="loginEmail" type="email" placeholder="your@gmail.com" required />
+          </div>
+          <div class="form-group">
+            <label for="loginPassword">Password</label>
+            <input id="loginPassword" type="password" placeholder="Enter password" required />
+          </div>
+          <button type="submit" class="btn full">Sign In</button>
+        </form>
+        <p class="auth-toggle">Don't have an account? <button type="button" id="switchToRegister" class="link-btn">Sign Up</button></p>
+      </div>
+
+      <div class="auth-form hidden" id="registerForm">
+        <h2>Create Your Account</h2>
+        <form id="registerFormEl">
+          <div class="form-group">
+            <label for="registerName">Full Name</label>
+            <input id="registerName" type="text" placeholder="Your name" required />
+          </div>
+          <div class="form-group">
+            <label for="registerEmail">Gmail Email</label>
+            <input id="registerEmail" type="email" placeholder="your@gmail.com" required />
+          </div>
+          <div class="form-group">
+            <label for="registerPassword">Password</label>
+            <input id="registerPassword" type="password" placeholder="Create password" required />
+          </div>
+          <button type="submit" class="btn full">Sign Up</button>
+        </form>
+        <p class="auth-toggle">Already have an account? <button type="button" id="switchToLogin" class="link-btn">Sign In</button></p>
+      </div>
     </div>
-    <nav class="tabs" aria-label="Primary">
-      <button id="tabAll" class="tab active" aria-selected="true" aria-controls="panelAll">All Books</button>
-      <button id="tabMy" class="tab" aria-selected="false" aria-controls="panelMy">My Books</button>
-    </nav>
-  </header>
+  </div>
 
-  <main>
-    <section class="controls" aria-label="Book controls">
-      <div class="row">
-        <div class="control search">
-          <label for="searchInput">Search</label>
-          <input id="searchInput" type="search" placeholder="Title, author, or keyword…" autocomplete="off" />
-        </div>
-        <div class="control select">
-          <label for="genreFilter">Genre</label>
-          <select id="genreFilter">
-            <option value="all">All</option>
-            <option>Fiction</option>
-            <option>Non‑Fiction</option>
-            <option>Fantasy</option>
-            <option>Science Fiction</option>
-            <option>Mystery</option>
-            <option>Romance</option>
-            <option>Biography</option>
-            <option>History</option>
-            <option>Technology</option>
-            <option>Self‑Help</option>
-            <option>Children</option>
-            <option>Young Adult</option>
-            <option>Horror</option>
-            <option>Thriller</option>
-            <option>Poetry</option>
-            <option>Classic</option>
-          </select>
-        </div>
-        <div class="control select">
-          <label for="sortSelect">Sort</label>
-          <select id="sortSelect">
-            <option value="title-asc">Title (A→Z)</option>
-            <option value="title-desc">Title (Z→A)</option>
-            <option value="author-asc">Author (A→Z)</option>
-            <option value="author-desc">Author (Z→A)</option>
-            <option value="year-desc">Year (new→old)</option>
-            <option value="year-asc">Year (old→new)</option>
-            <option value="rating-desc">Rating (high→low)</option>
-            <option value="rating-asc">Rating (low→high)</option>
-          </select>
-        </div>
-        <div class="control checkbox">
-          <label class="checkbox-label"><input id="availableOnly" type="checkbox" /> Only available</label>
-        </div>
-        <div class="spacer"></div>
-        <div class="control buttons">
-          <button id="resetBtn" class="btn secondary" title="Reset filters">Reset</button>
-        </div>
+  <div id="appScreen" class="app-screen hidden">
+    <header class="app-header">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">📚</span>
+        <h1 class="title">E‑Library</h1>
       </div>
-
-      <div id="myListSwitch" class="row hidden" role="tablist" aria-label="My books view">
-        <div class="segmented">
-          <input type="radio" id="segmentFavorites" name="myListType" value="favorites" checked />
-          <label for="segmentFavorites">Favorites</label>
-          <input type="radio" id="segmentBorrowed" name="myListType" value="borrowed" />
-          <label for="segmentBorrowed">Borrowed</label>
-        </div>
-        <div class="spacer"></div>
-        <button id="clearListBtn" class="btn danger outline" title="Clear current list">Clear This List</button>
+      <nav class="tabs" aria-label="Primary">
+        <button id="tabDashboard" class="tab active" aria-selected="true" aria-controls="panelDashboard">Dashboard</button>
+        <button id="tabLibrary" class="tab" aria-selected="false" aria-controls="panelLibrary">E-Library</button>
+        <button id="tabPrint" class="tab" aria-selected="false" aria-controls="panelPrint">Print Notes</button>
+        <button id="tabMyBooks" class="tab" aria-selected="false" aria-controls="panelMyBooks">My Books</button>
+      </nav>
+      <div class="user-menu">
+        <span id="userName" class="user-name"></span>
+        <button id="logoutBtn" class="btn secondary small">Logout</button>
       </div>
-    </section>
+    </header>
 
-    <section id="results" class="results" aria-live="polite">
-      <div id="booksGrid" class="grid" role="list"></div>
-      <div id="emptyState" class="empty hidden">No books match your filters.</div>
-    </section>
-  </main>
+    <main>
+      <section id="dashboardPanel" class="panel">
+        <div class="dashboard-welcome">
+          <h2 id="welcomeMsg"></h2>
+          <p class="dashboard-quote">Explore the world of knowledge at your fingertips</p>
+          <div class="quick-stats">
+            <div class="stat-card">
+              <div class="stat-number" id="favoriteCount">0</div>
+              <div class="stat-label">Favorites</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="borrowCount">0</div>
+              <div class="stat-label">Borrowed</div>
+            </div>
+            <div class="stat-card">
+              <div class="stat-number" id="printCount">0</div>
+              <div class="stat-label">Prints</div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-  <dialog id="bookModal" class="modal">
-    <form method="dialog" class="modal-card" id="bookModalCard">
+      <section id="libraryPanel" class="panel hidden">
+        <div class="controls" aria-label="Book controls">
+          <div class="row">
+            <div class="control search">
+              <label for="searchInput">Search</label>
+              <input id="searchInput" type="search" placeholder="Title, author, or keyword…" autocomplete="off" />
+            </div>
+            <div class="control select">
+              <label for="genreFilter">Genre</label>
+              <select id="genreFilter">
+                <option value="all">All</option>
+                <option>Fiction</option>
+                <option>Non‑Fiction</option>
+                <option>Fantasy</option>
+                <option>Science Fiction</option>
+                <option>Mystery</option>
+                <option>Romance</option>
+                <option>Biography</option>
+                <option>History</option>
+                <option>Technology</option>
+                <option>Self‑Help</option>
+                <option>Children</option>
+                <option>Young Adult</option>
+                <option>Horror</option>
+                <option>Thriller</option>
+                <option>Poetry</option>
+                <option>Classic</option>
+              </select>
+            </div>
+            <div class="control select">
+              <label for="sortSelect">Sort</label>
+              <select id="sortSelect">
+                <option value="title-asc">Title (A→Z)</option>
+                <option value="title-desc">Title (Z→A)</option>
+                <option value="author-asc">Author (A→Z)</option>
+                <option value="author-desc">Author (Z→A)</option>
+                <option value="year-desc">Year (new→old)</option>
+                <option value="year-asc">Year (old→new)</option>
+                <option value="rating-desc">Rating (high→low)</option>
+                <option value="rating-asc">Rating (low→high)</option>
+              </select>
+            </div>
+            <div class="control checkbox">
+              <label class="checkbox-label"><input id="availableOnly" type="checkbox" /> Only available</label>
+            </div>
+            <div class="spacer"></div>
+            <div class="control buttons">
+              <button id="resetBtn" class="btn secondary" title="Reset filters">Reset</button>
+            </div>
+          </div>
+        </div>
+
+        <section id="results" class="results" aria-live="polite">
+          <div id="booksGrid" class="grid" role="list"></div>
+          <div id="emptyState" class="empty hidden">No books match your filters.</div>
+        </section>
+      </section>
+
+      <section id="printPanel" class="panel hidden">
+        <div class="print-container">
+          <h2>Print Your Notes</h2>
+          <form id="printForm" class="print-form">
+            <div class="form-group">
+              <label for="printFile">Upload Document</label>
+              <input id="printFile" type="file" accept=".pdf,.doc,.docx,.txt,.jpg,.png" required />
+              <small>Supported: PDF, Word, Text, Image files</small>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label for="printColor">Color Mode</label>
+                <div class="radio-group">
+                  <label class="radio-label">
+                    <input type="radio" name="printColor" value="bw" checked /> Black & White
+                  </label>
+                  <label class="radio-label">
+                    <input type="radio" name="printColor" value="color" /> Colour
+                  </label>
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label for="printCopies">Number of Copies</label>
+                <input id="printCopies" type="number" min="1" max="50" value="1" required />
+              </div>
+            </div>
+
+            <div class="print-summary">
+              <p>Cost Summary:</p>
+              <div class="cost-breakdown">
+                <div class="cost-line">
+                  <span>Base Cost (1 page):</span>
+                  <span id="baseCost">₹5</span>
+                </div>
+                <div class="cost-line">
+                  <span>Copies:</span>
+                  <span id="copiesCost">₹5</span>
+                </div>
+                <div class="cost-line total">
+                  <span>Total Amount:</span>
+                  <span id="totalCost">₹5</span>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" id="gpayBtn" class="btn gpay-btn">
+              <span class="gpay-icon">💳</span> Pay with GPay
+            </button>
+          </form>
+
+          <div id="printHistory" class="print-history hidden">
+            <h3>Print History</h3>
+            <div id="printList" class="print-list"></div>
+          </div>
+        </div>
+      </section>
+
+      <section id="myBooksPanel" class="panel hidden">
+        <div class="my-books-container">
+          <div class="my-books-tabs">
+            <button id="myBooksFav" class="my-books-tab active">Favorites</button>
+            <button id="myBooksBorrow" class="my-books-tab">Borrowed</button>
+          </div>
+          <div id="myBooksGrid" class="grid" role="list"></div>
+          <div id="myBooksEmpty" class="empty hidden">No books in this list yet.</div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="app-footer">
+      <small>Made with HTML, CSS, and JS • E‑Library Demo</small>
+    </footer>
+  </div>
+
+  <div id="bookModal" class="modal hidden">
+    <div class="modal-card" id="bookModalCard">
       <header class="modal-header">
         <h2 id="modalTitle">Book Details</h2>
-        <button value="close" class="icon-btn" aria-label="Close">✕</button>
+        <button id="modalCloseBtn" class="icon-btn" aria-label="Close">✕</button>
       </header>
       <div class="modal-body" id="modalBody"></div>
       <footer class="modal-footer" id="modalFooter"></footer>
-    </form>
-  </dialog>
+    </div>
+  </div>
 
-  <footer class="app-footer">
-    <small>Made with HTML, CSS, and JS • E‑Library Demo</small>
-  </footer>
+  <div id="gpayModal" class="modal hidden">
+    <div class="modal-card modal-sm" id="gpayModalCard">
+      <header class="modal-header">
+        <h2>Complete Payment</h2>
+        <button id="gpayModalCloseBtn" class="icon-btn" aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body">
+        <div class="gpay-payment">
+          <div class="payment-detail">
+            <span>Amount to Pay:</span>
+            <span id="gpayAmount" class="amount-display">₹5</span>
+          </div>
+          <button id="confirmGpayBtn" class="btn full gpay-btn">
+            <span class="gpay-icon">💳</span> Confirm Payment
+          </button>
+          <button id="cancelGpayBtn" class="btn secondary full">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
   <script src="script.js"></script>
 </body>

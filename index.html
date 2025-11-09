@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>E‑Library</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <header class="app-header">
+    <div class="brand">
+      <span class="logo" aria-hidden="true">📚</span>
+      <h1 class="title">E‑Library</h1>
+    </div>
+    <nav class="tabs" aria-label="Primary">
+      <button id="tabAll" class="tab active" aria-selected="true" aria-controls="panelAll">All Books</button>
+      <button id="tabMy" class="tab" aria-selected="false" aria-controls="panelMy">My Books</button>
+    </nav>
+  </header>
+
+  <main>
+    <section class="controls" aria-label="Book controls">
+      <div class="row">
+        <div class="control search">
+          <label for="searchInput">Search</label>
+          <input id="searchInput" type="search" placeholder="Title, author, or keyword…" autocomplete="off" />
+        </div>
+        <div class="control select">
+          <label for="genreFilter">Genre</label>
+          <select id="genreFilter">
+            <option value="all">All</option>
+            <option>Fiction</option>
+            <option>Non‑Fiction</option>
+            <option>Fantasy</option>
+            <option>Science Fiction</option>
+            <option>Mystery</option>
+            <option>Romance</option>
+            <option>Biography</option>
+            <option>History</option>
+            <option>Technology</option>
+            <option>Self‑Help</option>
+            <option>Children</option>
+            <option>Young Adult</option>
+            <option>Horror</option>
+            <option>Thriller</option>
+            <option>Poetry</option>
+            <option>Classic</option>
+          </select>
+        </div>
+        <div class="control select">
+          <label for="sortSelect">Sort</label>
+          <select id="sortSelect">
+            <option value="title-asc">Title (A→Z)</option>
+            <option value="title-desc">Title (Z→A)</option>
+            <option value="author-asc">Author (A→Z)</option>
+            <option value="author-desc">Author (Z→A)</option>
+            <option value="year-desc">Year (new→old)</option>
+            <option value="year-asc">Year (old→new)</option>
+            <option value="rating-desc">Rating (high→low)</option>
+            <option value="rating-asc">Rating (low→high)</option>
+          </select>
+        </div>
+        <div class="control checkbox">
+          <label class="checkbox-label"><input id="availableOnly" type="checkbox" /> Only available</label>
+        </div>
+        <div class="spacer"></div>
+        <div class="control buttons">
+          <button id="resetBtn" class="btn secondary" title="Reset filters">Reset</button>
+        </div>
+      </div>
+
+      <div id="myListSwitch" class="row hidden" role="tablist" aria-label="My books view">
+        <div class="segmented">
+          <input type="radio" id="segmentFavorites" name="myListType" value="favorites" checked />
+          <label for="segmentFavorites">Favorites</label>
+          <input type="radio" id="segmentBorrowed" name="myListType" value="borrowed" />
+          <label for="segmentBorrowed">Borrowed</label>
+        </div>
+        <div class="spacer"></div>
+        <button id="clearListBtn" class="btn danger outline" title="Clear current list">Clear This List</button>
+      </div>
+    </section>
+
+    <section id="results" class="results" aria-live="polite">
+      <div id="booksGrid" class="grid" role="list"></div>
+      <div id="emptyState" class="empty hidden">No books match your filters.</div>
+    </section>
+  </main>
+
+  <dialog id="bookModal" class="modal">
+    <form method="dialog" class="modal-card" id="bookModalCard">
+      <header class="modal-header">
+        <h2 id="modalTitle">Book Details</h2>
+        <button value="close" class="icon-btn" aria-label="Close">✕</button>
+      </header>
+      <div class="modal-body" id="modalBody"></div>
+      <footer class="modal-footer" id="modalFooter"></footer>
+    </form>
+  </dialog>
+
+  <footer class="app-footer">
+    <small>Made with HTML, CSS, and JS • E‑Library Demo</small>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>
